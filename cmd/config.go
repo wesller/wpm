@@ -1,4 +1,4 @@
-// Copyright © 2019 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2019 Wesller da Silva França <wesller@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,28 +20,33 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// manifestCmd represents the manifest command
-var manifestCmd = &cobra.Command{
-	Use:   "manifest",
-	Short: "Generate manifest file",
-	Long: `The manifest is required for upload.
-		Generate the manifest file from all content folder
+var google bool
+
+// configCmd represents the config command
+var configCmd = &cobra.Command{
+	Use:   "config",
+	Short: "Config package manager",
+	Long: `General Configuration.
+		wpm suport google drive, amazon s3 e azure file storage.
 	`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("manifest called")
+		fmt.Println("config called")
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(manifestCmd)
+	RootCmd.AddCommand(configCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// manifestCmd.PersistentFlags().String("foo", "", "A help for foo")
+	configCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// manifestCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// configCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	configCmd.Flags().BoolVarP(&google, "google", "", false, "Use google account")
+	configCmd.Flags().BoolP("s3", "", false, "Use amazon s3")
+	configCmd.Flags().BoolP("azure", "", false, "Use Azure File Storage")
 }
