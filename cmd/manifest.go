@@ -18,30 +18,27 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/wesller/wpm/domain"
 )
+
+var all bool
+var folder string
 
 // manifestCmd represents the manifest command
 var manifestCmd = &cobra.Command{
 	Use:   "manifest",
-	Short: "Generate manifest file",
-	Long: `The manifest is required for upload.
-		Generate the manifest file from all content folder
-	`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("manifest called")
-	},
+	Short: "Gerar Manifesto",
+	Long:  `Gera o arquivo de manifesto automaticamente`,
+	Run:   run,
+}
+
+func run(cmd *cobra.Command, args []string) {
+	fmt.Println("manifest called")
+	domain.Generate(folder)
 }
 
 func init() {
 	RootCmd.AddCommand(manifestCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// manifestCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// manifestCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	manifestCmd.Flags().BoolVarP(&all, "all", "a", false, "Gerar um pacote para todos os arquivos da pasta")
+	manifestCmd.Flags().StringVarP(&folder, "folder", "f", "", "Pasta inicial para gerar o manifest")
 }

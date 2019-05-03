@@ -21,6 +21,7 @@ import (
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/wesller/wpm/logger"
 )
 
 var cfgFile string
@@ -29,9 +30,9 @@ var verbose bool
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
 	Use:   "wpm",
-	Short: "wpm is a package manager for command line",
+	Short: "wpm é um gerenciador de pacotes por linha de comando",
 	Long: `wpm is a package manager for command line.
-		wpm suporte repository:v{google drive, amazon s3 and Azure File Storage}
+		Suporte os seguintes repositórios:{google drive, amazon s3 and Azure File Storage}
 	`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
@@ -41,6 +42,7 @@ var RootCmd = &cobra.Command{
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
+	logger.LogFormat()
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -63,6 +65,10 @@ func init() {
 
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
+
+	if verbose {
+
+	}
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
